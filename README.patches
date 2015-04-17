@@ -1,0 +1,101 @@
+Easywizard
+Author Taihyun Hwang
+Version NetHack 3.4.3
+
+Anybody can enter wizard mode with -D option.  Login name doesn't need
+to be a 'wizard' to enter the wizard mode on *nix system.
+
+http://bilious.alt.org/?437
+
+Descriptive Hit Messages
+Author L
+Version NetHack 3.4.3
+
+"Hit" and "hits" replaced with "clubs", "slashes", "whacks", "stabs" etc.
+
+Changes to creature attacks: 
+* Creatures with beaks (ravens, tengu, vrocks) now "peck" rather than
+  "bite".
+* Monsters can now "kick" each other (formerly their kicking attack
+  simply "hit").
+
+If you or a creature has a bare-handed attack: 
+* Creatures with claws or foreclaws now "claw you".
+* Water elementals, fire elementals and krakens now "lash you", and
+  earth elementals now "pummel you".
+* Undead now "scratch" (different to "claw" as they don't have claws.)
+* Monks and samurai (including quest monsters) now "strike".
+* Everything else "punches". 
+
+If you or a creature has a weapon attack: 
+* Blunt weapons now "whack", except for clubs, maces and morning
+  stars, which "club".
+* Piercing weapons now "jab you", except for blades, which "stab".
+* Slashing weapons either "hack you", "hew you" (if it's an axe), or
+  "slash" (if it isn't). (Barbarians still "smite" instead of these.)
+* Whips now "whip you". 
+* Everything else (i.e worm teeth) will just "hit".
+
+CAVEATS: 
+* Nurse attacks now read like this: "The nurse punches! (I hope you
+  don't mind.)" Is this reasonable?
+* It assumes that there will never be a polearm that both slashes and
+  whacks (if there was, it would always "whack" and never "slash").
+
+http://bilious.alt.org/?309
+
+Any pet 1.0
+Author Karl Garrison
+Version NetHack 3.4.3
+
+Choose any monster as a starting pet
+
+This patch allows a character to start with nearly any monster as a
+starting pet in place of the usual choices. This code only takes
+effect if the "pettype" option is set to something other than the
+usual choices ("d", "dog", "c", "cat", "f", "feline", "n", or "none").
+
+New possible values for "pettype" include: 
+
+"a" or "ask": Ask the player what pet they would like when starting a
+new game.
+
+"r" or "random": Pick a monster at random for the starting pet.
+
+"s" or "steed": Pick a random monster that may be saddled and ridden
+as a starting pet.
+
+Any other setting for "pettype" will be interpreted as the name of a
+specific monster. E.g., setting "pettype" to "rabid rat" would make
+the starting pet a rabid rat.
+
+Only monsters that are genocidable may be chosen or randomly
+generated. If a starting pet can be saddled and ridden, then the pet
+will be saddled when created if the character has at least basic
+riding skill (currently only the knight class in vanilla).
+
+If the pet comes saddled, the "horsename" setting is used for the
+pet's name, otherwise "catname" is used.
+
+Any comments or suggestions are welcome.
+
+http://bilious.alt.org/?374
+
+Damage messages v1.0
+Author L
+Version NetHack 3.4.3
+
+Adds messages that tell how badly wounded a monster is
+
+You know how in Linley's Dungeon Crawl you get damage messages such as
+"The giant newt is almost dead" when you hit monsters? Well, this
+patch gives one of the character classes that functionality.
+
+DETAILS: 
+
+* You get the message whenever you hit a monster with a weapon,
+  projectile, attack spell or ray.
+* Hallucination obfuscation! 
+* Can also check monsters for wounds using the ';' key.
+
+http://bilious.alt.org/?293

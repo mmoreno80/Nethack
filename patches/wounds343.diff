@@ -1,0 +1,131 @@
+You know how in Linley's Dungeon Crawl you get damage messages such as "The giant newt is almost dead" when you hit monsters? Well, this patch gives one of the character classes that functionality.
+
+DETAILS:
+
+* Only for Healers!
+* You get the message whenever you hit a monster with a weapon, projectile, attack spell or ray.
+* Hallucination obfuscation!
+* Can also check monsters for wounds using the ';' key.
+
+diff -Nurb -x .DS_Store nethack-3.4.3-original/include/extern.h nethack-3.4.3/include/extern.h
+--- nethack-3.4.3-original/include/extern.h	Mon Dec  8 09:39:13 2003
++++ nethack-3.4.3/include/extern.h	Tue May 16 16:52:04 2006
+@@ -687,6 +687,8 @@
+ E boolean FDECL(test_move, (int, int, int, int, int));
+ E void NDECL(domove);
+ E void NDECL(invocation_message);
++E void FDECL(wounds_message,(struct monst *));
++E char *FDECL(mon_wounds,(struct monst *));
+ E void FDECL(spoteffects, (BOOLEAN_P));
+ E char *FDECL(in_rooms, (XCHAR_P,XCHAR_P,int));
+ E boolean FDECL(in_town, (int,int));
+diff -Nurb -x .DS_Store nethack-3.4.3-original/src/hack.c nethack-3.4.3/src/hack.c
+--- nethack-3.4.3-original/src/hack.c	Mon Dec  8 09:39:13 2003
++++ nethack-3.4.3/src/hack.c	Tue May 16 16:57:13 2006
+@@ -1451,6 +1451,59 @@
+ 	}
+ }
+ 
++static const char * const hallu_adverb[] = {
++    "mildly", "mostly", "somewhat", "slightly", "probably", "massively", "extremely",
++    "flagrantly", "flamboyantly", "supremely", "excessively", "truly", "terribly",
++    "incredibly", "unbelievably", "obscenely", "insanely", "amazingly", "absolutely"
++};
++
++void
++wounds_message(mon)
++struct monst *mon;
++{
++    if (mon_wounds(mon))
++	pline("%s is %s.", Monnam(mon), mon_wounds(mon));
++}
++
++char *
++mon_wounds(mon)
++struct monst *mon;
++{
++	static char buf[BUFSZ];
++	boolean wounded = ((!nonliving(mon->data) || 
++			/* Zombies and mummies (but not skeletons) have flesh */
++			((mon->data->mlet == S_ZOMBIE && mon->data != &mons[PM_SKELETON])
++			  || mon->data->mlet == S_MUMMY || mon->data->mlet == S_VAMPIRE
++			  || mon->data == &mons[PM_FLESH_GOLEM]))
++			&& !vegetarian(mon->data));
++
++	/* Able to detect wounds? */
++	if (!(canseemon(mon) || (u.ustuck == mon && u.uswallow && !Blind))
++		 || !Role_if(PM_HEALER))
++	    return (char *)0;
++	if (mon->mhp == mon->mhpmax || mon->mhp < 1)
++	    return (char *)0;
++	if (!Hallucination && mon->mhp <= mon->mhpmax / 6) {
++	    Sprintf(buf,"almost ");
++	    strcat(buf, nonliving(mon->data) ? "destroyed" : "dead");
++	} else {
++	    if (Hallucination) {
++		Sprintf(buf,hallu_adverb[rn2(SIZE(hallu_adverb))]);
++		strcat(buf," ");
++	    }
++	    else if (mon->mhp <= mon->mhpmax / 4)
++	        Sprintf(buf,"horribly ");
++	    else if (mon->mhp <= mon->mhpmax / 3)
++	        Sprintf(buf,"heavily ");
++	    else if (mon->mhp <= 3 * mon->mhpmax / 4)
++	        Sprintf(buf,"moderately ");
++	    else
++		Sprintf(buf,"lightly ");
++	    strcat(buf, wounded || (Hallucination && rn2(2)) ? "wounded" : "damaged");
++	}
++	return buf;
++}
++
+ #endif /* OVL3 */
+ #ifdef OVL2
+ 
+diff -Nurb -x .DS_Store nethack-3.4.3-original/src/pager.c nethack-3.4.3/src/pager.c
+--- nethack-3.4.3-original/src/pager.c	Mon Dec  8 09:39:13 2003
++++ nethack-3.4.3/src/pager.c	Tue May 16 16:53:11 2006
+@@ -141,7 +141,10 @@
+ 		    (mtmp->mtame && accurate) ? "tame " :
+ 		    (mtmp->mpeaceful && accurate) ? "peaceful " : "",
+ 		    name);
+-	    if (u.ustuck == mtmp)
++	    if (mon_wounds(mtmp)) {
++		Strcat(buf, ", ");
++		Strcat(buf, mon_wounds(mtmp));
++	    } if (u.ustuck == mtmp)
+ 		Strcat(buf, (Upolyd && sticks(youmonst.data)) ?
+ 			", being held" : ", holding you");
+ 	    if (mtmp->mleashed)
+diff -Nurb -x .DS_Store nethack-3.4.3-original/src/uhitm.c nethack-3.4.3/src/uhitm.c
+--- nethack-3.4.3-original/src/uhitm.c	Mon Dec  8 09:39:13 2003
++++ nethack-3.4.3/src/uhitm.c	Tue May 16 16:53:38 2006
+@@ -1060,7 +1060,7 @@
+ 				canseemon(mon))
+ 			    pline("%s appears confused.", Monnam(mon));
+ 		}
+-	}
++	} if (!destroyed) wounds_message(mon);
+ 
+ 	return((boolean)(destroyed ? FALSE : TRUE));
+ }
+diff -Nurb -x .DS_Store nethack-3.4.3-original/src/zap.c nethack-3.4.3/src/zap.c
+--- nethack-3.4.3-original/src/zap.c	Mon Dec  8 09:39:13 2003
++++ nethack-3.4.3/src/zap.c	Tue May 16 16:59:17 2006
+@@ -3419,6 +3419,7 @@
+ 			if (!otmp) {
+ 			    /* normal non-fatal hit */
+ 			    hit(fltxt, mon, exclam(tmp));
++			    wounds_message(mon);
+ 			} else {
+ 			    /* some armor was destroyed; no damage done */
+ 			    if (canseemon(mon))
+@@ -4084,7 +4085,7 @@
+ 	    if (mtmp->mhp < 1) {
+ 		if(m_using) monkilled(mtmp, "", AD_RBRE);
+ 		else killed(mtmp);
+-	    }
++	    } else wounds_message(mtmp);
+ 	}
+ 	return(resisted);
+ }
