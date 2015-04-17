@@ -99,3 +99,31 @@ DETAILS:
 * Can also check monsters for wounds using the ';' key.
 
 http://bilious.alt.org/?293
+
+Dump Character v1.5
+Author Jukka Lahtinen
+Version Nethack 3.4.3
+
+	Enables you to automatically dump certain data on the (most likely) premature death of your character to a file.
+ 	Each time a game really ends (character either dead, quit, or ascended), you can get the dump. 
+
+The following data can be dumped: 
+
+- character name, alignment, gender, race, role and stats 
+- the final screen picture 
+- inventory 
+- the contents of containers you are carrying 
+- attributes (what you get from, say, quaffing a potion of enlightenment) 
+- known spells 
+- vanquished monsters 
+- genocided monsters 
+- voluntary challenges 
+- skills 
+- the information on the "Goodbye" screen you see after all this and before the score list. This also includes the "killer" string that is shown on the logfile and highscore list as the reason for game ending. 
+
+The dumping takes place exactly at the time when you get presented this data on the screen. Some data is dumped only if you see it on the screen, some is always dumped. Maybe some later version of the patch will dump all of this information regardless of what you decide to view.. 
+
+This patch is more often known as the "dumplog patch"
+
+http://bilious.alt.org/?40
+
