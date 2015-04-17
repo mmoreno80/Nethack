@@ -288,7 +288,7 @@ static struct Comp_Opt
 						15, SET_IN_FILE },
 # endif
 #endif
-	{ "pettype",  "your preferred initial pet type", 4, DISP_IN_GAME },
+	{ "pettype",  "your preferred initial pet type", 64, DISP_IN_GAME },
 	{ "pickup_burden",  "maximum burden picked up before prompt",
 						20, SET_IN_GAME },
 	{ "pickup_types", "types of objects to pick up automatically",
@@ -1036,9 +1036,12 @@ boolean tinitial, tfrom_file;
 
 	fullname = "pettype";
 	if (match_optname(opts, fullname, 3, TRUE)) {
+		(void) mungspaces(op);
+		(void) lcase(op);
 		if ((op = string_for_env_opt(fullname, opts, negated)) != 0) {
-		    if (negated) bad_negation(fullname, TRUE);
-		    else switch (*op) {
+		    if (strlen(op) == 1)
+		    {
+    		    switch (*op) {
 			case 'd':	/* dog */
 			case 'D':
 			    preferred_pet = 'd';
@@ -1053,10 +1056,56 @@ boolean tinitial, tfrom_file;
 			case 'N':
 			    preferred_pet = 'n';
 			    break;
+    			case 'a':	/* ask */
+    			case 'A':
+    			    preferred_pet = 'a';
+    			    break;
+    			case 's':	/* steed */
+    			case 'S':
+    			    preferred_pet = 's';
+    			    break;
+    			case 'r':	/* random */
+    			case 'R':
+    			    preferred_pet = 'r';
+    			    break;
 			default:
 			    pline("Unrecognized pet type '%s'.", op);
 			    break;
 		    }
+    		}
+    		else
+    		{
+    		    if (strcmp(op, "dog") == 0)
+    		    {
+    		        preferred_pet = 'd';
+    		    }
+    		    else if ((strcmp(op, "cat") == 0) ||
+    		     (strcmp(op, "feline") == 0))
+    		    {
+    		        preferred_pet = 'd';
+    		    }
+    		    else if (strcmp(op, "none") == 0)
+    		    {
+    		        preferred_pet = 'n';
+    		    }
+    		    else if (strcmp(op, "ask") == 0)
+    		    {
+    		        preferred_pet = 'a';
+    		    }
+    		    else if (strcmp(op, "steed") == 0)
+    		    {
+    		        preferred_pet = 's';
+    		    }
+    		    else if (strcmp(op, "random") == 0)
+    		    {
+    		        preferred_pet = 'r';
+    		    }
+    		    else    /* Specific pet specified */
+    		    {
+                    strncpy(pet_monster, op, 63);
+    		        preferred_pet = 'm';    /* Monster */
+    		    }
+    		}
 		} else if (negated) preferred_pet = 'n';
 		return;
 	}
@@ -3047,6 +3096,9 @@ char *buf;
 	else if (!strcmp(optname, "pettype")) 
 		Sprintf(buf, "%s", (preferred_pet == 'c') ? "cat" :
 				(preferred_pet == 'd') ? "dog" :
+				(preferred_pet == 'a') ? "ask" :
+				(preferred_pet == 's') ? "steed" :
+				(preferred_pet == 'r') ? "random" :
 				(preferred_pet == 'n') ? "none" : "random");
 	else if (!strcmp(optname, "pickup_burden"))
 		Sprintf(buf, "%s", burdentype[flags.pickup_burden] );

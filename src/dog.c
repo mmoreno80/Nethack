@@ -134,10 +134,105 @@ makedog()
 	const char *petname;
 	int   pettype;
 	static int petname_used = 0;
+	char buf[BUFSZ];
+	int pet_try = 0;
 
 	if (preferred_pet == 'n') return((struct monst *) 0);
 
 	pettype = pet_type();
+
+    if (preferred_pet == 'a') 
+    {
+        do
+        {
+			if (pet_try == 0)
+			{
+    			getlin("What type of pet would you like?", buf);
+			}
+            else
+            {
+    			getlin("Try again. What type of pet would you like?",
+    			 buf);
+            }
+            
+    		(void) mungspaces(buf);
+    		(void) lcase(buf);
+    		
+    		if (strlen(buf) == 0)
+    		{
+    		    preferred_pet = 'r';
+    		    break;
+    		}
+            
+			pettype = name_to_mon(buf);
+			
+			if (pettype < LOW_PM)
+			{
+				pline("I've never heard of such monsters.");
+			}
+			else if (!polyok(&mons[pettype]))
+			{
+				pline("A pet %s is not allowed.", buf);
+            }
+            else
+            {
+                break;
+            }
+            
+            pet_try++;
+        } while(pet_try < 5);
+    }
+    
+    if (pet_try == 5)
+    {
+        pline("That's enough tries.");
+        preferred_pet = 'r';
+    }
+    
+    if (preferred_pet == 'm') 
+    {
+		if (strlen(pet_monster) == 0)
+		{
+		    preferred_pet = 'r';
+		}
+        
+		pettype = name_to_mon(pet_monster);
+		
+		if (pettype < LOW_PM)
+		{
+			pline("I've never heard of such monsters.");
+		    preferred_pet = 'r';
+		}
+		else if (!polyok(&mons[pettype]))
+		{
+			pline("A pet %s is not allowed.", buf);
+		    preferred_pet = 'r';
+        }
+    }
+    
+    if (preferred_pet == 'r') 
+    {
+        do
+        {
+            pettype = rn1(SPECIAL_PM - LOW_PM, LOW_PM);
+        } while(!polyok(&mons[pettype]));
+    }
+
+#ifdef STEED    
+    if (preferred_pet == 's') 
+    {
+        mtmp = malloc(sizeof(struct monst));
+        
+        do
+        {
+            pettype = rn1(SPECIAL_PM - LOW_PM, LOW_PM);
+            mtmp->data = &mons[pettype];
+        } while((!polyok(&mons[pettype])) || (!can_saddle(mtmp)));
+        
+        free(mtmp);
+    }
+#endif
+    
 	if (pettype == PM_LITTLE_DOG)
 		petname = dogname;
 	else if (pettype == PM_PONY)
@@ -159,14 +254,17 @@ makedog()
 	if(!mtmp) return((struct monst *) 0); /* pets were genocided */
 
 #ifdef STEED
-	/* Horses already wear a saddle */
-	if (pettype == PM_PONY && !!(otmp = mksobj(SADDLE, TRUE, FALSE))) {
+	/* Rideable pets come with a saddle if the character has any riding
+	   skill */
+    if ((P_SKILL(P_RIDING) >= P_BASIC) && can_saddle(mtmp) &&
+     !!(otmp = mksobj(SADDLE, TRUE, FALSE))) {
 	    if (mpickobj(mtmp, otmp))
 		panic("merged saddle?");
 	    mtmp->misc_worn_check |= W_SADDLE;
 	    otmp->dknown = otmp->bknown = otmp->rknown = 1;
 	    otmp->owornmask = W_SADDLE;
 	    otmp->leashmon = mtmp->m_id;
+		petname = horsename;
 	    update_mon_intrinsics(mtmp, otmp, TRUE, TRUE);
 	}
 #endif
