@@ -3419,6 +3419,7 @@ register int dx,dy;
 			if (!otmp) {
 			    /* normal non-fatal hit */
 			    hit(fltxt, mon, exclam(tmp));
+			    wounds_message(mon);
 			} else {
 			    /* some armor was destroyed; no damage done */
 			    if (canseemon(mon))
@@ -4084,7 +4085,7 @@ int damage, tell;
 	    if (mtmp->mhp < 1) {
 		if(m_using) monkilled(mtmp, "", AD_RBRE);
 		else killed(mtmp);
-	    }
+	    } else wounds_message(mtmp);
 	}
 	return(resisted);
 }
