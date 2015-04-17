@@ -1,0 +1,343 @@
+# -*- conf -*-
+
+# PLAYER SPECIFIC OPTIONS
+
+## Joanna
+# OPTIONS=name:Joanna
+# OPTIONS=align:lawful,gender:female,race:human,role:knight
+# OPTIONS=dumpfile:/tmp/%n-Knight-Human-Female-Lawful-%d.dump
+# OPTIONS=horsename:Uni
+# OPTIONS=pettype:white unicorn
+
+## Ichi
+# OPTIONS=name:Ichi
+# OPTIONS=align:lawful,gender:male,race:human,role:samurai
+# OPTIONS=dumpfile:/tmp/%n-Samurai-Human-Male-Lawful-%d.dump
+# OPTIONS=catname:Ginger
+# OPTIONS=pettype:tiger
+
+## Hildr
+# OPTIONS=name:Hildr
+# OPTIONS=align:lawful,gender:female,race:dwarf,role:valkyrie
+# OPTIONS=dumpfile:/tmp/%n-Valkyrie-Dwarf-Female-Lawful-%d.dump
+# OPTIONS=catname:Wagner
+# OPTIONS=pettype:winter wolf
+
+## Tenser
+#OPTIONS=name:Tenser
+#OPTIONS=align:neutral,gender:male,race:human,role:wizard
+#OPTIONS=dumpfile:/tmp/%n-Wizard-Human-Male-Neutral-%d.dump
+
+## Hiro
+# OPTIONS=name:Hiro
+# OPTIONS=align:neutral,gender:male,race:human,role:tourist
+# OPTIONS=dumpfile:/tmp/%n-Tourist-Human-Male-Neutral-%d.dump
+
+###############################################################################
+## PETS
+#OPTIONS=catname:Lucky,pettype:pony
+
+#OPTIONS=catname:Colossus
+#OPTIONS=pettype:stone golem
+
+#OPTIONS=catname:Lyzandred
+#OPTIONS=pettype:arch lich
+
+#OPTIONS=catname:Zoiberg
+#OPTIONS=pettype:mind flayer
+#MSGTYPE=hide "A wave of psychic energy pours over you! *It feels quite soothing."
+#MSGTYPE=hide "Zoiberg concentrates."
+#MSGTYPE=hide "It feels quite soothing."
+
+# CHOOSE ANY MONSTER AS A STARTING PET
+# "d", "dog", "c", "cat", "f", "feline", "n", "none",
+# "a" ask, "r" random, or "s" steed.
+# Warning: Don't load bone files.
+# See http://bilious.alt.org/?374
+#OPTIONS=pettype:a
+
+# (Not) prevent powerful monster wandering because of bone files
+#OPTIONS=bones
+
+# BUG!
+#OPTIONS=name:-
+
+# PARANOID
+# Require you to type "yes" instead of just "y"e
+# See http://bilious.alt.org/?44
+#OPTIONS=paranoid_hit,paranoid_quit,paranoid_remove
+
+# DEFAULTS OPTIONS
+OPTIONS=autodig
+OPTIONS=autopickup
+OPTIONS=!autoquiver
+OPTIONS=boulder:0
+OPTIONS=checkpoint
+OPTIONS=checkspace
+OPTIONS=cmdassist
+OPTIONS=color
+OPTIONS=confirm
+#OPTIONS=dumpfile:/tmp/%n-%t.dump
+OPTIONS=!IBMgraphics
+OPTIONS=DECgraphics
+OPTIONS=disclose:yi ya nv ng yc
+OPTIONS=!eight_bit_tty
+OPTIONS=!extmenu
+OPTIONS=fixinv
+OPTIONS=help
+OPTIONS=!ignintr
+OPTIONS=legacy
+OPTIONS=lit_corridor
+OPTIONS=!mail
+OPTIONS=menustyle:full
+OPTIONS=msghistory:60
+OPTIONS=msg_window:reversed
+OPTIONS=!news
+OPTIONS=!number_pad
+OPTIONS=pushweapon
+OPTIONS=!rest_on_space
+OPTIONS=runmode:walk
+OPTIONS=safe_pet
+OPTIONS=scores:10t 2a o
+OPTIONS=showexp
+OPTIONS=showrace
+OPTIONS=showscore
+OPTIONS=silent
+OPTIONS=sortpack
+OPTIONS=sparkle
+OPTIONS=standout
+OPTIONS=time
+OPTIONS=tombstone
+OPTIONS=verbose
+OPTIONS=windowtype:tty
+OPTIONS=prayconfirm
+OPTIONS=pickup_burden:U
+OPTIONS=pickup_types:$"?+=
+OPTIONS=suppress_alert:3.4.3
+OPTIONS=hilite_pet
+
+# AUTOPICKUP EXCEPTIONS
+# http://nethackwiki.com/wiki/Autopickup_exceptions
+# Uses globbing, unless you set OPTIONS=apexception_regex
+#
+#	Always pick these:
+# AUTOPICKUP_EXCEPTION="<*magic lamp*"
+# AUTOPICKUP_EXCEPTION="<*wand of wishing*"
+# AUTOPICKUP_EXCEPTION="<*wand of death*"
+# AUTOPICKUP_EXCEPTION="<*wand of polymorph*"
+# AUTOPICKUP_EXCEPTION="<*!*"
+# #	Don't pick these:
+# AUTOPICKUP_EXCEPTION=">*worthless piece of*"
+# AUTOPICKUP_EXCEPTION=">*loadstone*"
+# AUTOPICKUP_EXCEPTION=">*flint stone*"
+# AUTOPICKUP_EXCEPTION=">*_*"
+
+# COLORES STATUS LINES
+# See http://bilious.alt.org/?142
+# HP & Pw also support exact numbers, for example:
+# STATUSCOLOR=hp.1:red&inverse,hp<8:red,hp>50:grey
+#
+# OPTIONS=statuscolors
+# #	HP
+# STATUSCOLOR=hp%100=green
+# STATUSCOLOR=hp%66=yellow
+# STATUSCOLOR=hp%33=red
+# STATUSCOLOR=hp%10=red&inverse&blink
+# #	Pw
+# STATUSCOLOR=pw%100=green
+# STATUSCOLOR=pw%66=yellow
+# STATUSCOLOR=pw%33=red
+# STATUSCOLOR=pw%10=red&blink
+# #	Carry
+# STATUSCOLOR=burdened:yellow
+# STATUSCOLOR=stressed:red
+# STATUSCOLOR=strained:red&inverse
+# STATUSCOLOR=overtaxed:red&inverse
+# STATUSCOLOR=overloaded:red&inverse&blink
+# #	Hunger
+# STATUSCOLOR=satiated:green
+# STATUSCOLOR=hungry:yellow
+# STATUSCOLOR=weak:red
+# STATUSCOLOR=fainting:red&inverse&blink
+# STATUSCOLOR=fainted:red&inverse&blink
+# #	Mental
+# STATUSCOLOR=hallu:yellow
+# STATUSCOLOR=conf:red
+# STATUSCOLOR=stun:red&bold
+# #	Health
+# STATUSCOLOR=blind:yellow
+# STATUSCOLOR=ill:red&inverse&blink
+# STATUSCOLOR=foodpois:red&inverse&blink
+# STATUSCOLOR=slime:red&inverse&blink
+
+# KEY REBINDING
+# Key rebinding and extended command autocomplete:
+# 1) All commands are now extended commands. Use the ext command name
+#    for binding and autocompleting.
+# 2) Key to bind can be:
+#      "x" for regular key x,
+#      "mx" or "m-x" for meta-x,
+#      "cx" or "c-x" or "^x" for ctrl-x,
+#      "<enter>", "<space>" or "<esc>"
+#      "nothing" will remove the binding
+# See http://bilious.alt.org/?72
+#BINDINGS=!:inventory,v:untrap
+#AUTOCOMPLETE=save,!quit
+
+# COLORED MENUS
+# Regular expressions allowed.
+# OPTIONS=menucolors
+# MENUCOLOR=" blessed "=green
+# MENUCOLOR=" holy "=green
+# MENUCOLOR=" cursed "=red
+# MENUCOLOR=" unholy "=red
+# MENUCOLOR=" cursed .* (being worn)"=red&underline
+
+# MESSAGE TYPE
+# Uses globbing, unless you set OPTIONS=msgtype_regex
+# See http://bilious.alt.org/?397
+#
+#	Displacing pets
+# MSGTYPE=hide "You displaced *."
+
+# #	Items on floor
+# #MSGTYPE=norep "You see here a *."
+# #MSGTYPE=norep "You see here an *."
+# #	Condition
+# MSGTYPE=stop "You feel feverish."
+# MSGTYPE=stop "You don't feel very well."
+# MSGTYPE=stop "You feel deathly sick."
+# MSGTYPE=stop "You feel much worse."
+# MSGTYPE=stop "You feel even worse."
+# MSGTYPE=stop "You are beginning to feel hungry."
+# MSGTYPE=stop "You are beginning to feel weak."
+# MSGTYPE=stop "* needs food, badly!"
+# MSGTYPE=stop "* is about to die."
+# MSGTYPE=stop "You regain consciousness."
+# MSGTYPE=stop "You faint *."
+# #	Delayed instadeaths
+# MSGTYPE=stop "The * swings itself around you!"
+# MSGTYPE=stop "The * grabs you!"
+# MSGTYPE=stop "You are turning a little green."
+# MSGTYPE=stop "You cannot escape from the *."
+# MSGTYPE=stop "Your limbs are getting oozy."
+# MSGTYPE=stop "Your skin begins to peel away."
+# MSGTYPE=stop "You are turning into a green slime."
+# MSGTYPE=stop "You are slowing down."
+# MSGTYPE=stop "Your limbs are stiffening."
+# MSGTYPE=stop "It constricts your throat!"
+# MSGTYPE=stop "You find it hard to breathe."
+# MSGTYPE=stop "You're gasping for air."
+# MSGTYPE=stop "Your blood is having trouble reaching your brain."
+# MSGTYPE=stop "You can no longer breathe."
+# MSGTYPE=stop "You're turning blue."
+# MSGTYPE=stop "Your consciousness is fading."
+# MSGTYPE=stop "The * lashes you!"
+# #	Notice
+# MSGTYPE=stop "You see here a cockatrice corpse."
+# MSGTYPE=stop "You see here a chickatrice corpse."
+# MSGTYPE=stop "You feel more confident in your weapon skills."
+# MSGTYPE=stop "Goodbye level *."
+# MSGTYPE=stop "Sayonara level *."
+# MSGTYPE=stop "Fare thee well level *."
+# MSGTYPE=stop "Aloha level *."
+# MSGTYPE=stop "Farvel level *."
+# MSGTYPE=stop "Welcome to experience level *."
+# MSGTYPE=stop "You hear the chime of a cash register."
+# MSGTYPE=stop "There is a staircase down here."
+# #	Vibration square
+# MSGTYPE=stop "You feel a strange vibration under your *."
+# MSGTYPE=stop "You feel a strange vibration beneath you."
+# #	Pets
+# MSGTYPE=stop "You pull on the leash.* It yelps!"
+# MSGTYPE=stop "You have a sad feeling for a moment, then it passes."
+# MSGTYPE=stop "* picks up *."
+# MSGTYPE=stop "* moves only reluctantly."
+
+################################################################################
+## The following are options not in vanilla NetHack:
+################################################################################
+#
+## Use the dark gray color. Might not work on all terminals.
+#OPTIONS=use_darkgray
+#
+## Try to hilight stairs under items with red background.
+## Try to hilight piles of objects with blue background.
+## Might not work on all terminals.
+#OPTIONS=hilite_hidden_stairs
+#OPTIONS=hilite_obj_piles
+# #
+# ## In dumplog, display the number of each type of monster created,
+# ## rather than just the number killed
+# OPTIONS=showborn
+# #
+# ## Disable the generic item use menu (select an item to use directly
+# ## from inventory)
+# OPTIONS=!item_use_menu
+# #
+# ## Say in the message line whenever you walk against a wall.
+# ## Useful for blind players.
+# #OPTION=msg_wall_hits
+# #
+# ## Show item glyphs (color and symbol) in tty menus.
+# OPTION=menu_glyphs
+# #
+# ## Name and rank background correspond to statuscolor HP colors.
+# #OPTIONS=hitpointbar
+# #
+# #
+# ## Sort items by name. One of "none", "loot", or "
+# OPTIONS=sortloot:full
+# #
+# ## Always show BUC status?
+# OPTIONS=showbuc
+# #
+# ## Always show windows starting from left edge of screen?
+# #OPTIONS=win_edge
+# #
+# ## Show object class symbol in menus where it acts as a hotkey
+# OPTIONS=show_obj_sym
+# #
+# #
+# ## If on, you'll quiver items if you fire 'em.
+# OPTIONS=quiver_fired
+# #
+# #
+# # To make playing with a screen-reader such as JAWS easier:
+# #   Prevent status lines from updating. use extended command
+# #    #updatestatus to force an update.
+# #OPTIONS=!botl_updates
+# #   Notify HP changes in the message lines.
+# #OPTIONS=hp_notify
+# #   Optionally, change HP notify format. Accepts following codes:
+# #     %a = HP adjustment since last notification. No + or - sign.
+# #     %c = HP adjustment sign ('+' or '-')
+# #     %h = Current HP
+# #     %m = Max. HP
+# #     %H = Current HP, or "max" if hp=maxhp
+# #OPTIONS=hp_notify_fmt:[HP%c%a=%H]
+# #
+# #
+# # Configurable dungeon feature colors: http://bilious.alt.org/?17
+# #DUNGEONCOLOR= 0  7  7  7  7  7  7  7  7  7 \
+# #              7  7  7  3  3  3  3  6  2  7 \
+# #              0  7  15 15 3  3  7  7  11 7 \
+# #              4  4  6  1  3  3  3  3  6  7 \
+# #              4
+# #TRAPCOLORS= 6 6 7 3 6 1 7 12 4 9 0 0 3 3 5 5 13 7 7 12 12 10
+# #
+# # ``DUNGEONCOLOR'' are in the same order as ``DUNGEON'', and
+# # ``TRAPCOLORS'' as ``TRAPS''
+# #
+# #
+# # Configurable monster colors
+# #MONSTERCOLOR=floating eye:yellow
+# #MONSTERCOLOR=master mind flayer:lightmagenta
+# #
+# # See http://nethackwiki.com/wiki/Curses_interface
+# #OPTIONS=windowtype:curses
+
+# # For more information on what you can set in your nethackrc file, refer to:
+# #    http://www.nethack.org/v343/Guidebook.html#_TOCentry_42
+# # or http://nethackwiki.com/wiki/Options
+# # Happy hacking!
