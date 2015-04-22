@@ -422,23 +422,65 @@ bot2()
 
 	if(flags.time)
 	    Sprintf(nb = eos(nb), " T:%ld", moves);
-	if(strcmp(hu_stat[u.uhs], "        ")) {
-		Sprintf(nb = eos(nb), " ");
-		Strcat(newbot2, hu_stat[u.uhs]);
-	}
-	if(Confusion)	   Sprintf(nb = eos(nb), " Conf");
+	if(strcmp(hu_stat[u.uhs], "        "))
+#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
+	     	add_colored_text(hu_stat[u.uhs], newbot2);
+#else
+		Sprintf(nb = eos(nb), " %s", hu_stat[u.uhs]);
+#endif
+	if(Confusion)
+#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
+	     	add_colored_text("Conf", newbot2);
+#else
+		Strcat(nb = eos(nb), " Conf");
+#endif
 	if(Sick) {
 		if (u.usick_type & SICK_VOMITABLE)
-			   Sprintf(nb = eos(nb), " FoodPois");
+#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
+			add_colored_text("FoodPois", newbot2);
+#else
+			Strcat(nb = eos(nb), " FoodPois");
+#endif
 		if (u.usick_type & SICK_NONVOMITABLE)
-			   Sprintf(nb = eos(nb), " Ill");
+#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
+			add_colored_text("Ill", newbot2);
+#else
+			Strcat(nb = eos(nb), " Ill");
+#endif
 	}
-	if(Blind)	   Sprintf(nb = eos(nb), " Blind");
-	if(Stunned)	   Sprintf(nb = eos(nb), " Stun");
-	if(Hallucination)  Sprintf(nb = eos(nb), " Hallu");
-	if(Slimed)         Sprintf(nb = eos(nb), " Slime");
+	if(Blind)
+#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
+	     	add_colored_text("Blind", newbot2);
+#else
+		Strcat(nb = eos(nb), " Blind");
+#endif
+	if(Stunned)
+#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
+	     	add_colored_text("Stun", newbot2);
+#else
+		Strcat(nb = eos(nb), " Stun");
+#endif
+	if(Hallucination)
+#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
+	     	add_colored_text("Hallu", newbot2);
+#else
+		Strcat(nb = eos(nb), " Hallu");
+#endif
+	if(Slimed)
+#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
+	     	add_colored_text("Slime", newbot2);
+#else
+		Strcat(nb = eos(nb), " Slime");
+#endif
 	if(cap > UNENCUMBERED)
+#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
+		add_colored_text(enc_stat[cap], newbot2);
+#else
 		Sprintf(nb = eos(nb), " %s", enc_stat[cap]);
+#endif
+#if defined(STATUS_COLORS)
+	flags.botlx = save_botlx;
+#endif
 #ifdef DUMP_LOG
 }
 STATIC_OVL void
