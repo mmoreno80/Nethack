@@ -379,6 +379,9 @@ typedef unsigned char	uchar;
                                          * to prevent definition by users */
 #define DUMPMSGS 20     /* Number of latest messages in the dump file  */
 
+/* Paranoid quit, hit and remove */
+#define PARANOID
+
 /* End of Section 5 */
 
 #include "global.h"	/* Define everything else according to choices above */

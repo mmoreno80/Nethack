@@ -188,3 +188,23 @@ o Fixed several shameful bugs.
 * v1.0: 
 o Initial release. 
 
+Paranoid Quit v1.0
+Author Jukka Lahtinen, David Damerell, Jonathan Nieder, Stanislav Traykov
+Version Nethack 3.4.3
+
+Requires you to type
+This patch makes the commands #q (quit) and X (change to explore mode)
+(if the option paranoid_quit is on), and the prompts for hitting
+peaceful monsters (if options confirm and paranoid_hit are on) and
+leaving wizard mode bones (regardless of runtime options), expect a
+typed "yes" instead of just 'y'. Every other response will be treated
+as "no".
+
+Now it also forces the menu to be shown with the 'T' and 'R' commands
+even when there is only one item to be taken off or removed, if the
+additional paranoid_remove option is set.
+
+Apply the patch and add 
+#define PARANOID 
+in your include/config.h and OPTIONS=paranoid_hit,paranoid_quit,paranoid_remove in your configuration file.
+
